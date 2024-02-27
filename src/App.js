@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import InputForm from "./inputForm";
+import Page from "./page";
+import { Box } from "@chakra-ui/react";
+import { useState } from "react";
 
 function App() {
+  const [channelData, setChannelData] = useState([]);
+  const [error, setError] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box px={"30"} pt={"30"}>
+      <InputForm setChannelData={setChannelData} setError={setError} />
+      {error !== "" && <h1>{error}</h1>}
+      {channelData.map((data, index) => {
+        if (data.error) {
+          return <h1 key={index}>{data.error}</h1>;
+        } else {
+          return <Page data={data} key={index} />;
+        }
+      })}
+    </Box>
   );
 }
 
